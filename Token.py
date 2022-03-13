@@ -1,17 +1,20 @@
 from TokenType import TokenType
 
+
 class Token:
     @staticmethod
     def get_token(s: str) -> tuple[int, str]:
         tkn_type = -1
 
-        if s == '(': tkn_type = TokenType.L_PAR
-        elif s == ')': tkn_type = TokenType.R_PAR
-        elif s in TokenType.math_ops: tkn_type = TokenType.MATH_OP
-        elif s in TokenType.prims: tkn_type = TokenType.PRIM
-        else: tkn_type = TokenType.ID
+        if s == '(':
+            tkn_type = TokenType.L_PAR
+        elif s == ')':
+            tkn_type = TokenType.R_PAR
+        elif s in TokenType.math_ops:
+            tkn_type = TokenType.MATH_OP
+        elif s in TokenType.prims:
+            tkn_type = TokenType.PRIM
+        else:
+            tkn_type = TokenType.ID
 
-        return (tkn_type, s)
-
-
-
+        return tkn_type, s

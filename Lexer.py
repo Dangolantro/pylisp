@@ -1,11 +1,12 @@
 from Token import Token
 
+
 class Lexer:
     @staticmethod
     def tokenize(prg: str) -> list:
         items = prg.replace('(', ' ( ') \
-                .replace(')', ' ) ') \
-                .split()
+            .replace(')', ' ) ') \
+            .split()
 
         result = []
         for i in items:
