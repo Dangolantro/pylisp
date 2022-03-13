@@ -1,11 +1,6 @@
 from Lexer import Lexer
 from TokenType import TokenType
 
-Id = str
-Primitive = str
-BinOp = str
-Number = (int, float)
-
 
 def parse(program):
     return read_from_tokens(tokenize(program))
@@ -28,22 +23,22 @@ def read_from_tokens(tokens):
     elif token[0] == TokenType.PRIM or token[0] == TokenType.ID:
         return atom(token)
     elif token[0] == TokenType.MATH_OP:
-        return BinOp(token[1])
+        return token
     else:
         raise SyntaxError('unexpected ' + token[1])
 
 
 def atom(token):
     if token[0] == TokenType.PRIM:
-        return Primitive(token[1])
+        return token
     assert token[0] == TokenType.ID
     try:
-        return int(token[1])
+        return token[0], int(token[1])
     except ValueError:
         try:
-            return float(token[1])
+            return token[0], float(token[1])
         except ValueError:
-            return Id(token[1])
+            return token
 
 
 def standard_env():
