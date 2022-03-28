@@ -1,3 +1,4 @@
+from tokenize import Token
 from Lexer import Lexer
 from TokenType import TokenType
 
@@ -20,9 +21,10 @@ def read_from_tokens(tokens):
             ast.append(read_from_tokens(tokens))
         tokens.pop(0)
         return ast
-    elif token[0] == TokenType.PRIM or token[0] == TokenType.ID:
+    elif token[0] == TokenType.PRIM or token[0] == TokenType.NUM:
         return atom(token)
-    elif token[0] == TokenType.MATH_OP:
+    elif token[0] == TokenType.MATH_OP or token[0] == TokenType.ID \
+            or token[0] == TokenType.NO_EVAL:
         return token
     else:
         raise SyntaxError('unexpected ' + token[1])
@@ -31,7 +33,7 @@ def read_from_tokens(tokens):
 def atom(token):
     if token[0] == TokenType.PRIM:
         return token
-    assert token[0] == TokenType.ID
+    assert token[0] == TokenType.NUM
     try:
         return token[0], int(token[1])
     except ValueError:

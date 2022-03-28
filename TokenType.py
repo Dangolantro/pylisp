@@ -3,7 +3,9 @@ class TokenType:
     R_PAR = 1
     MATH_OP = 2
     PRIM = 3
-    ID = 4
+    NUM = 4
+    ID = 5
+    NO_EVAL = 6
 
     math_ops = {'+', '-', '*', '/'}
     prims = {'eq?', 'quote', 'cons', 'car', 'cdr', 'atom?', 'define', 'lambda', 'cond'}
