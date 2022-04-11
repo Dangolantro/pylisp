@@ -1,4 +1,5 @@
 from TokenType import TokenType
+from EvalException import EvalException
 
 
 class Token:
@@ -30,7 +31,7 @@ class Token:
             return val
         elif tkn_type == TokenType.ID:
             if val not in env: 
-                raise Exception(f"Reference to undefined object '{val}'")
+                raise EvalException(env, f"Reference to undefined object '{val}'")
             return env[val]
         elif tkn_type == TokenType.MATH_OP:
             return env[val](Token.eval(expr[1], env), Token.eval(expr[2], env))

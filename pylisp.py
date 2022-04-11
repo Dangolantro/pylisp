@@ -1,3 +1,4 @@
+from EvalException import EvalException
 from Token import Token
 from Lexer import Lexer
 from TokenType import TokenType
@@ -72,9 +73,14 @@ def repl(prompt='lisp> '):
         #     print(lispstr(val))
         ast = parse(input(prompt))
         if logOn: print(f'LOG: {ast}')
-        out = Token.eval(ast, env)
-        if out is not None:
-            print(out)
+        try:
+            out = Token.eval(ast, env)
+            if out is not None:
+                print(out)
+        except EvalException as e:
+            print(e.message)
+            print('Stacktrace: ')
+            print(e.env)
 
 
 def lispstr(exp):
