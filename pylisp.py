@@ -1,6 +1,14 @@
-from tokenize import Token
+from Token import Token
 from Lexer import Lexer
 from TokenType import TokenType
+from globals import logOn
+
+env = {
+    '+': lambda x,y: x+y,
+    '-': lambda x,y: x-y,
+    '*': lambda x,y: x*y,
+    '/': lambda x,y: x/y
+}
 
 
 def parse(program):
@@ -62,9 +70,11 @@ def repl(prompt='lisp> '):
         # val = eval(parse(input(prompt)))
         # if val is not None:
         #     print(lispstr(val))
-        val = parse(input(prompt))
-        if val is not None:
-            print(val)
+        ast = parse(input(prompt))
+        if logOn: print(f'LOG: {ast}')
+        out = Token.eval(ast, env)
+        if out is not None:
+            print(out)
 
 
 def lispstr(exp):

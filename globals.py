@@ -1,0 +1,2 @@
+global logOn
+logOn = True
