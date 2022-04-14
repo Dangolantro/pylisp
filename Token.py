@@ -26,16 +26,19 @@ class Token:
 
     @staticmethod
     def eval(expr, env: dict):
-        tkn_type, val = expr[0] if isinstance(expr, list) else expr
-        if tkn_type == TokenType.NUM:
-            return val
-        elif tkn_type == TokenType.ID:
-            if val not in env: 
-                raise EvalException(env, f"Reference to undefined object '{val}'")
-            return env[val]
-        elif tkn_type == TokenType.MATH_OP:
-            return env[val](Token.eval(expr[1], env), Token.eval(expr[2], env))
-        elif tkn_type == TokenType.PRIM:
-            if val == 'define':
-                #TODO: make sure ID name is valid
-                env[expr[1][1]] = expr[2][1]
+        try:
+            tkn_type, val = expr[0] if isinstance(expr, list) else expr
+            if tkn_type == TokenType.NUM:
+                return val
+            elif tkn_type == TokenType.ID:
+                if val not in env:
+                    raise Exception(f"Reference to undefined object '{val}'")
+                return env[val]
+            elif tkn_type == TokenType.MATH_OP:
+                return env[val](Token.eval(expr[1], env), Token.eval(expr[2], env))
+            elif tkn_type == TokenType.PRIM:
+                if val == 'define':
+                    # TODO: make sure ID name is valid
+                    env[expr[1][1]] = expr[2][1]
+        except Exception as e:
+            raise EvalException(env, str(e)) from e

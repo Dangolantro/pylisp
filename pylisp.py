@@ -3,6 +3,7 @@ from Token import Token
 from Lexer import Lexer
 from TokenType import TokenType
 from globals import logOn
+import traceback
 
 env = {
     '+': lambda x,y: x+y,
@@ -79,8 +80,9 @@ def repl(prompt='lisp> '):
                 print(out)
         except EvalException as e:
             print(e.message)
-            print('Stacktrace: ')
+            print('Environment: ')
             print(e.env)
+            print(traceback.format_exc())
 
 
 def lispstr(exp):
