@@ -18,7 +18,9 @@ def parse(program):
 
 
 def tokenize(s):
-    return Lexer.tokenize(s)
+    tokens = Lexer.tokenize(s)
+    if logOn: print(f'LOG: {tokens}')
+    return tokens
 
 
 def read_from_tokens(tokens):
@@ -31,10 +33,18 @@ def read_from_tokens(tokens):
             ast.append(read_from_tokens(tokens))
         tokens.pop(0)
         return ast
+    elif token[0] == TokenType.APSTR:
+        if len(tokens) == 0 or tokens[0][0] != TokenType.L_PAR:
+            return token
+        tokens.pop(0)
+        ast = []
+        while tokens[0][0] != TokenType.R_PAR:
+            ast.append(read_from_tokens(tokens))
+        tokens.pop(0)
+        return [token, ast]
     elif token[0] == TokenType.PRIM or token[0] == TokenType.NUM:
         return atom(token)
-    elif token[0] == TokenType.MATH_OP or token[0] == TokenType.ID \
-            or token[0] == TokenType.NO_EVAL:
+    elif token[0] == TokenType.MATH_OP or token[0] == TokenType.ID:
         return token
     else:
         raise SyntaxError('unexpected ' + token[1])
@@ -77,13 +87,19 @@ def repl(prompt='lisp> '):
         try:
             out = Token.eval(ast, env)
             if out is not None:
-                print(out)
+                format_print(out)
         except EvalException as e:
             print(e.message)
             print('Environment: ')
             print(e.env)
             print(traceback.format_exc())
 
+#WIP
+def format_print(out: str):
+    if isinstance(out, list):
+        print(f"({', '.join([str(el) for el in out])})")
+    else:
+        print(out)
 
 def lispstr(exp):
     return ''

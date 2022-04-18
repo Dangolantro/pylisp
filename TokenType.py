@@ -5,7 +5,12 @@ class TokenType:
     PRIM = 3
     NUM = 4
     ID = 5
-    NO_EVAL = 6
+    APSTR = 6
 
     math_ops = {'+', '-', '*', '/'}
     prims = {'eq?', 'quote', 'cons', 'car', 'cdr', 'atom?', 'define', 'lambda', 'cond'}
+    arg_count = {
+        'eq?': 2,
+        'define': 2,
+        'quote': 1
+    }
