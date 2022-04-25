@@ -87,19 +87,26 @@ def repl(prompt='lisp> '):
         try:
             out = Token.eval(ast, env)
             if out is not None:
-                format_print(out)
+                print(format_string(out))
         except EvalException as e:
             print(e.message)
             print('Environment: ')
             print(e.env)
             print(traceback.format_exc())
 
-#WIP
-def format_print(out: str):
+
+# WIP
+def format_string(out):
     if isinstance(out, list):
-        print(f"({', '.join([str(el) for el in out])})")
+        # out is tuple with ' and list
+        if out[0][0] == 6:
+            return f"'({' '.join([format_string(el[1]) for el in out[1]])})"
+        else:
+            # out is list
+            return f"'({' '.join([format_string(el[1]) for el in out])})"
     else:
-        print(out)
+        return out
+
 
 def lispstr(exp):
     return ''
