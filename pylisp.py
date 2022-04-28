@@ -98,12 +98,12 @@ def repl(prompt='lisp> '):
 # WIP
 def format_string(out):
     if isinstance(out, list):
-        # out is tuple with ' and list
+        # out is quoted
         if out[0][0] == 6:
-            return f"'({' '.join([format_string(el[1]) for el in out[1]])})"
+            return out[0][1][1:] + f"({' '.join([format_string(el[1]) for el in out[1]])})"
         else:
             # out is list
-            return f"'({' '.join([format_string(el[1]) for el in out])})"
+            return f"({' '.join([format_string(el[1]) for el in out])})"
     else:
         return out
 
