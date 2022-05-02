@@ -44,7 +44,7 @@ def read_from_tokens(tokens):
         return [token, ast]
     elif token[0] == TokenType.PRIM or token[0] == TokenType.NUM:
         return atom(token)
-    elif token[0] == TokenType.MATH_OP or token[0] == TokenType.ID:
+    elif token[0] == TokenType.MATH_OP or token[0] == TokenType.ID or token[0] == TokenType.BOOL:
         return token
     else:
         raise SyntaxError('unexpected ' + token[1])
