@@ -1,0 +1,7 @@
+(define fibonacci (lambda (n) (cond ((eq? n 1) 1) ((eq? n 2) 1) (#t (+ (fibonacci (- n 1)) (fibonacci (- n 2)))))))
+
+(define sum (lambda (l) (cond ((eq? l '()) 0) (#t (+ (car l) (sum (cdr l)))))))
+
+(define square (lambda (x) (* x x)))
+
+(define divides_evenly? (lambda (x y) (eq? (* x (/ x y)) y))) (divides_evenly? 5 2)
