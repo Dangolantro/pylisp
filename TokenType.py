@@ -6,11 +6,15 @@ class TokenType:
     NUM = 4
     ID = 5
     APSTR = 6
+    BOOL = 7
 
     math_ops = {'+', '-', '*', '/'}
     prims = {'eq?', 'quote', 'cons', 'car', 'cdr', 'atom?', 'define', 'lambda', 'cond'}
     arg_count = {
         'eq?': 2,
         'define': 2,
-        'quote': 1
+        'quote': 1,
+        'car': 1,
+        'cdr': 1,
+        'lambda': 2
     }

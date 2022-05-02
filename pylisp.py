@@ -6,10 +6,10 @@ from globals import logOn
 import traceback
 
 env = {
-    '+': lambda x,y: x+y,
-    '-': lambda x,y: x-y,
-    '*': lambda x,y: x*y,
-    '/': lambda x,y: x/y
+    '+': lambda x,y: x[1]+y[1],
+    '-': lambda x,y: x[1]-y[1],
+    '*': lambda x,y: x[1]*y[1],
+    '/': lambda x,y: x[1]/y[1]
 }
 
 
@@ -85,27 +85,27 @@ def repl(prompt='lisp> '):
         ast = parse(input(prompt))
         if logOn: print(f'LOG: {ast}')
         try:
-            out = Token.eval(ast, env)
+            out = format_string(Token.eval(ast, env))
             if out is not None:
-                print(format_string(out))
+                print(out)
         except EvalException as e:
             print(e.message)
             print('Environment: ')
             print(e.env)
-            print(traceback.format_exc())
+            #print(traceback.format_exc())
 
 
 # WIP
 def format_string(out):
-    if isinstance(out, list):
-        # out is quoted
-        if out[0][0] == 6:
-            return out[0][1][1:] + f"({' '.join([format_string(el[1]) for el in out[1]])})"
-        else:
-            # out is list
-            return f"({' '.join([format_string(el[1]) for el in out])})"
-    else:
-        return out
+    type, val = out if isinstance(out, tuple) else out[0]
+    if type == TokenType.NUM:
+        return str(val)
+    elif type == TokenType.BOOL:
+        return val
+    elif type == TokenType.APSTR:
+        return f"({', '.join([format_string(el) for el in out[1]])})"
+
+    return None
 
 
 def lispstr(exp):

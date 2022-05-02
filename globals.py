@@ -1,2 +1,2 @@
 global logOn
-logOn = True
+logOn = False
