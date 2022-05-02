@@ -108,18 +108,6 @@ def format_string(out):
     return None
 
 
-def lispstr(exp):
-    return ''
-
-
-class Procedure():
-    None
-
-
-def eval(l, env=global_env):
-    return ''
-
-
 def main():
     repl()
 

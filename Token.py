@@ -86,6 +86,8 @@ class Token:
                         'args': expr[1],
                         'expr': expr[2]
                     }
+                elif val == 'cons':
+                    return [(6, "'"), [Token.eval(expr[1], env), Token.eval(expr[2], env)]]
             elif tkn_type == TokenType.APSTR:
                 if isinstance(expr, list) and len(expr) > 1:
                     return expr

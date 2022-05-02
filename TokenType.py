@@ -16,5 +16,6 @@ class TokenType:
         'quote': 1,
         'car': 1,
         'cdr': 1,
-        'lambda': 2
+        'lambda': 2,
+        'cons': 2
     }
